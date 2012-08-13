@@ -7,6 +7,7 @@
 
   <body>
     <script src="jquery-1.7.2.min.js"></script>
+    <script src="lands.js"></script>
   <div id="mapadiv">
 <!-- svg original: http://commons.wikimedia.org/wiki/File:Comunidades_aut%C3%B3nomas_de_Espa%C3%B1a.svg -->
 <svg
@@ -142,66 +143,6 @@
   <script>
       var selected = null;
 
-      var lands = [
-        [$("#andalucia_path"), $("#andalucia_label")],
-        [$("#canarias_path"), $("#canarias_label")],
-        [$("#baleares_path"), $("#baleares_label")],
-        [$("#murcia_path"), $("#murcia_label")],
-        [$("#extremadura_path"), $("#extremadura_label")],
-        [$("#castilla_la_mancha_path"), $("#castilla_la_mancha_label")],
-        [$("#valencia_path"), $("#valencia_label")],
-        [$("#baleares_path"), $("#baleares_label")],
-        [$("#madrid_path"), $("#madrid_label")],
-        [$("#catalunya_path"), $("#catalunya_label")],
-        [$("#aragon_path"), $("#aragon_label")],
-        [$("#castilla_y_leon_path"), $("#castilla_y_leon_label")],
-        [$("#galicia_path"), $("#galicia_label")],
-        [$("#navarra_path"), $("#navarra_label")],
-        [$("#la_rioja_path"), $("#la_rioja_label")],
-        [$("#pais_vasco_path"), $("#pais_vasco_label")],
-        [$("#cantabria_path"), $("#cantabria_label")],
-        [$("#asturias_path"), $("#asturias_label")],
-        [$("#ceuta_path"), $("#ceuta_label")],
-        [$("#melilla_path"), $("#melilla_label")],
-      ];
-      var edges = [
-        [$("#andalucia_path"), $("#canarias_path")],
-        [$("#andalucia_path"), $("#murcia_path")],
-        [$("#andalucia_path"), $("#extremadura_path")],
-        [$("#andalucia_path"), $("#castilla_la_mancha_path")],
-        [$("#andalucia_path"), $("#ceuta_path")],
-        [$("#andalucia_path"), $("#melilla_path")],
-        [$("#ceuta_path"), $("#melilla_path")],
-        [$("#extremadura_path"), $("#castilla_la_mancha_path")],
-        [$("#murcia_path"), $("#castilla_la_mancha_path")],
-        [$("#murcia_path"), $("#valencia_path")],
-        [$("#valencia_path"), $("#castilla_la_mancha_path")],
-        [$("#valencia_path"), $("#baleares_path")],
-        [$("#valencia_path"), $("#aragon_path")],
-        [$("#madrid_path"), $("#castilla_la_mancha_path")],
-        [$("#madrid_path"), $("#castilla_y_leon_path")],
-        [$("#catalunya_path"), $("#baleares_path")],
-        [$("#catalunya_path"), $("#valencia_path")],
-        [$("#catalunya_path"), $("#aragon_path")],
-        [$("#castilla_la_mancha_path"), $("#aragon_path")],
-        [$("#castilla_y_leon_path"), $("#extremadura_path")],
-        [$("#castilla_y_leon_path"), $("#castilla_la_mancha_path")],
-        [$("#castilla_y_leon_path"), $("#aragon_path")],
-        [$("#castilla_y_leon_path"), $("#galicia_path")],
-        [$("#castilla_y_leon_path"), $("#la_rioja_path")],
-        [$("#castilla_y_leon_path"), $("#pais_vasco_path")],
-        [$("#castilla_y_leon_path"), $("#asturias_path")],
-        [$("#castilla_y_leon_path"), $("#cantabria_path")],
-        [$("#aragon_path"), $("#navarra_path")],
-        [$("#aragon_path"), $("#la_rioja_path")],
-        [$("#la_rioja_path"), $("#navarra_path")],
-        [$("#la_rioja_path"), $("#pais_vasco_path")],
-        [$("#navarra_path"), $("#pais_vasco_path")],
-        [$("#cantabria_path"), $("#pais_vasco_path")],
-        [$("#cantabria_path"), $("#asturias_path")],
-        [$("#galicia_path"), $("#asturias_path")],
-      ];
-
       $(document).ready(function(){
         $("path").click(function(event){
           clickOnLand(event.target);
@@ -212,11 +153,12 @@
         $("text").click(function(event){
           var land = null;
           for (var i=0; i<lands.length; i++) {
-            if (event.target.id==lands[i][1][0].id) {
-              land = lands[i][0][0];
+            if (event.target.id==lands[i].label_id) {
+              land = document.getElementById(lands[i].path_id);
               break;
             }
           }
+          console.log(land.id);
           if (land!=null) {
             clickOnLand(land);
           } else {
@@ -285,19 +227,13 @@
         land.style['stroke-width'] = 0.2;
       }
 
-      function reset() {
-        for (var i=0; i<lands.length(); i++) {
-          applyUnselectedStyle(lands[i]);
-        }
-      }
-
       function getNeighbours(land) {
         var neighbours = [];
         for(var i=0; i<edges.length; i++) {
-          if (land === edges[i][0][0])
-            neighbours.push(edges[i][1][0]);
-          else if (land === edges[i][1][0])
-            neighbours.push(edges[i][0][0]);
+          if (land.id == edges[i][0])
+            neighbours.push(document.getElementById(edges[i][1]));
+          else if (land.id == edges[i][1])
+            neighbours.push(document.getElementById(edges[i][0]));
         }
         return neighbours;
       }
