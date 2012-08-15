@@ -137,10 +137,11 @@
 
   <script>
     var selected = null;
+    var player = 'human';
 
+    reset();
     for (var i=0; i<lands.length; i++) {
       land = document.getElementById(lands[i].path_id);
-      applyUnselectedStyle(land);
       label = document.getElementById(lands[i].label_id);
       land.onclick = function(event) {
         clickOnLand(event.target);
@@ -152,69 +153,81 @@
         mouseOutLand(event.target);
       }
       label.onclick = function(event) {
-        clickOnLand(getLandForLabel(event.target.id));
+        clickOnLand(getPathForLabel(event.target.id));
       }
       label.onmouseover = function(event) {
-        mouseOverLand(getLandForLabel(event.target.id));
+        mouseOverLand(getPathForLabel(event.target.id));
       }
       label.onmouseout = function(event) {
-        mouseOutLand(getLandForLabel(event.target.id));
+        mouseOutLand(getPathForLabel(event.target.id));
       }
     }
 
-    function clickOnLand(land) {
-      neighbours = getNeighbours(land);
-      if (land == selected) {
-        applyUnselectedStyle(selected);
-        for (var i=0; i<neighbours.length; i++) {
-          applyUnselectedStyle(neighbours[i]);
-        }
+    function clickOnLand(path) {
+      var selectedLand = null;
+      if (selected!=null) {
+        selectedLand = getLandForPathId(selected.id);
+      }
+      var clickedLand = getLandForPathId(path.id);
+      var neighbours = getNeighbours(path);
+
+      // selected == path > unselect selected
+      if (selectedLand == clickedLand) {
+        reset();
         selected = null;
+      } else if (selectedLand != null && selectedLand.owner.name == player 
+                  && clickedLand.owner.name != player && clickedLand.state == 'neighbour') {
+        // selected mine, path enemy, neighbour > attack
+        console.log('al ataque! '+selected.id+' '+path.id);
       } else {
-        if (selected != null) {
-          selectedNeighbours = getNeighbours(selected);
-          applyUnselectedStyle(selected);
-          for (var i=0; i<selectedNeighbours.length; i++) {
-            applyUnselectedStyle(selectedNeighbours[i]);
-          }
-        }
-        selected = land;
-        applySelectedStyle(land);
+        // selected enemy || null, path whatever > select path
+        // selected mine, path mine > select path
+        // selected mine, path enemy not neighbour > select path
+        reset();
+        selected = path;
+        applySelectedStyle(path);
         for (var i=0; i<neighbours.length; i++) {
           applyNeighbourStyle(neighbours[i]);
         }
       }
     }
 
-    function mouseOverLand(land) {
-      land.style.stroke = 'black';
-      land.style['stroke-width'] = 0.5;
+    function reset() {
+      for (var i=0; i<lands.length; i++) {
+        applyUnselectedStyle(lands[i]);
+      }      
     }
 
-    function mouseOutLand(land) {
-      land.style.stroke = 'grey';
-      land.style['stroke-width'] = 0.2;
+    function mouseOverLand(path) {
+      var land = getLandForPathId(path.id);
+      path.style.stroke = 'black';
+      path.style['stroke-width'] = 0.5;
     }
 
-    function applySelectedStyle(land) {
-      l = getLandForPath(land.id);
-      land.style.fill = l.owner.color.enabledColor;
-      land.style.stroke = 'grey';
-      land.style['stroke-width'] = 0.2;
+    function mouseOutLand(path) {
+      var land = getLandForPathId(path.id);
+      path.style.stroke = 'grey';
+      path.style['stroke-width'] = 0.2;
+    }
+
+    function applySelectedStyle(path) {
+      var land = getLandForPathId(path.id);
+      land.state = "selected";
+      path.style.fill = land.owner.color.enabledColor;
+      var label = document.getElementById(land.label_id);
+      label.textContent = land.current_dice;
     }
 
     function applyUnselectedStyle(land) {
-      l = getLandForPath(land.id);
-      land.style.fill = l.owner.color.disabledColor;
-      land.style.stroke = 'grey';
-      land.style['stroke-width'] = 0.2;
+      land.state = "unselected";
+      var path = document.getElementById(land.path_id);
+      path.style.fill = land.owner.color.disabledColor;
     }
 
-    function applyNeighbourStyle(land) {
-      l = getLandForPath(land.id);
-      land.style.fill = l.owner.color.neighbourColor;
-      land.style.stroke = 'black';
-      land.style['stroke-width'] = 0.5;
+    function applyNeighbourStyle(path) {
+      var land = getLandForPathId(path.id);
+      land.state = "neighbour";
+      path.style.fill = land.owner.color.neighbourColor;
     }
 
     function getNeighbours(land) {

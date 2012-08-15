@@ -1,59 +1,34 @@
 function Land(path_id, label_id, current_dice, max_dice, owner) {
 	this.path_id = path_id;
-	//this.path = getElementById(path_id);
 	this.label_id = label_id;
 	this.current_dice = current_dice;
 	this.max_dice = max_dice;
 	this.owner = owner;
 	// on, off, neighbour
 	this.state = 'off';
-
-	function select() {
-      path.style.fill = owner.color.enabledColor;
-	}
-
-	function unselect() {
-      path.style.fill = owner.color.disabledColor;
-  	}
-
-  	function neighbour() {
-      path.style.fill = l.owner.color.neighbourColor;  		
-  	}
-
-	function borderOn() {
-		path = getElementById(this.path_id);
-      path.style.stroke = 'grey';
-      path.style['stroke-width'] = 0.2;
-	}
-
-	function borderOff() {
-		path = getElementById(this.path_id);
-      path.style.stroke = 'black';
-      path.style['stroke-width'] = 0.5;
-	}
 }
 
 var lands = [
-	new Land("andalucia_path", "andalucia_label", 1, 8, players[0]),
-	new Land("canarias_path", "canarias_label", 1, 8, players[1]),
-	new Land("baleares_path", "baleares_label", 1, 8, players[0]),
-	new Land("murcia_path", "murcia_label", 1, 8, players[1]),
-	new Land("extremadura_path", "extremadura_label", 1, 8, players[0]),
-	new Land("castilla_la_mancha_path", "castilla_la_mancha_label", 1, 8, players[1]),
-	new Land("valencia_path", "valencia_label", 1, 8, players[0]),
-	new Land("baleares_path", "baleares_label", 1, 8, players[1]),
-	new Land("madrid_path", "madrid_label", 1, 8, players[0]),
-	new Land("catalunya_path", "catalunya_label", 1, 8, players[1]),
-	new Land("aragon_path", "aragon_label", 1, 8, players[0]),
-	new Land("castilla_y_leon_path", "castilla_y_leon_label", 1, 8, players[1]),
-	new Land("galicia_path", "galicia_label", 1, 8, players[0]),
-	new Land("navarra_path", "navarra_label", 1, 8, players[1]),
-	new Land("la_rioja_path", "la_rioja_label", 1, 8, players[0]),
-	new Land("pais_vasco_path", "pais_vasco_label", 1, 8, players[1]),
-	new Land("cantabria_path", "cantabria_label", 1, 8, players[0]),
-	new Land("asturias_path", "asturias_label", 1, 8, players[1]),
-	new Land("ceuta_path", "ceuta_label", 1, 8, players[0]),
-	new Land("melilla_path", "melilla_label", 1, 8, players[1])
+	new Land("andalucia_path", "andalucia_label", 3, 8, players[0]),
+	new Land("canarias_path", "canarias_label", 3, 8, players[1]),
+	new Land("baleares_path", "baleares_label", 3, 8, players[0]),
+	new Land("murcia_path", "murcia_label", 3, 8, players[1]),
+	new Land("extremadura_path", "extremadura_label", 3, 8, players[0]),
+	new Land("castilla_la_mancha_path", "castilla_la_mancha_label", 3, 8, players[1]),
+	new Land("valencia_path", "valencia_label", 3, 8, players[0]),
+	new Land("baleares_path", "baleares_label", 3, 8, players[1]),
+	new Land("madrid_path", "madrid_label", 3, 8, players[0]),
+	new Land("catalunya_path", "catalunya_label", 3, 8, players[1]),
+	new Land("aragon_path", "aragon_label", 3, 8, players[0]),
+	new Land("castilla_y_leon_path", "castilla_y_leon_label", 3, 8, players[1]),
+	new Land("galicia_path", "galicia_label", 3, 8, players[0]),
+	new Land("navarra_path", "navarra_label", 3, 8, players[1]),
+	new Land("la_rioja_path", "la_rioja_label", 3, 8, players[0]),
+	new Land("pais_vasco_path", "pais_vasco_label", 3, 8, players[1]),
+	new Land("cantabria_path", "cantabria_label", 3, 8, players[0]),
+	new Land("asturias_path", "asturias_label", 3, 8, players[1]),
+	new Land("ceuta_path", "ceuta_label", 3, 8, players[0]),
+	new Land("melilla_path", "melilla_label", 3, 8, players[1])
 ];
 
 var edges = [
@@ -94,21 +69,24 @@ var edges = [
 	["galicia_path", "asturias_path"],
 ];
 
-function getLandForLabel(label_id) {
+function getPathForLabel(label_id) {
 	var land = null;
 	for (var i=0; i<lands.length; i++) {
 	  if (label_id==lands[i].label_id) {
-	  	return lands[i];
-	    //return document.getElementById(lands[i].path_id);
+	    return document.getElementById(lands[i].path_id);
 	  }
 	}
 }
 
-function getLandForPath(path_id) {
+function getLandForPathId(path_id) {
 	var land = null;
 	for (var i=0; i<lands.length; i++) {
 	  if (path_id==lands[i].path_id) {
 	    return lands[i];
 	  }
 	}
+}
+
+function attack(attacker, defender) {
+
 }
