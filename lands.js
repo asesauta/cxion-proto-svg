@@ -9,26 +9,25 @@ function Land(path_id, label_id, current_dice, max_dice, owner) {
 }
 
 var lands = [
-	new Land("andalucia_path", "andalucia_label", 3, 8, players[0]),
-	new Land("canarias_path", "canarias_label", 3, 8, players[1]),
-	new Land("baleares_path", "baleares_label", 3, 8, players[0]),
-	new Land("murcia_path", "murcia_label", 3, 8, players[1]),
-	new Land("extremadura_path", "extremadura_label", 3, 8, players[0]),
-	new Land("castilla_la_mancha_path", "castilla_la_mancha_label", 3, 8, players[1]),
-	new Land("valencia_path", "valencia_label", 3, 8, players[0]),
-	new Land("baleares_path", "baleares_label", 3, 8, players[1]),
-	new Land("madrid_path", "madrid_label", 3, 8, players[0]),
-	new Land("catalunya_path", "catalunya_label", 3, 8, players[1]),
-	new Land("aragon_path", "aragon_label", 3, 8, players[0]),
-	new Land("castilla_y_leon_path", "castilla_y_leon_label", 3, 8, players[1]),
-	new Land("galicia_path", "galicia_label", 3, 8, players[0]),
-	new Land("navarra_path", "navarra_label", 3, 8, players[1]),
-	new Land("la_rioja_path", "la_rioja_label", 3, 8, players[0]),
-	new Land("pais_vasco_path", "pais_vasco_label", 3, 8, players[1]),
-	new Land("cantabria_path", "cantabria_label", 3, 8, players[0]),
-	new Land("asturias_path", "asturias_label", 3, 8, players[1]),
-	new Land("ceuta_path", "ceuta_label", 3, 8, players[0]),
-	new Land("melilla_path", "melilla_label", 3, 8, players[1])
+	new Land("andalucia_path", "andalucia_label", 3, 8, randomPlayer()),
+	new Land("canarias_path", "canarias_label", 3, 8, randomPlayer()),
+	new Land("baleares_path", "baleares_label", 3, 8, randomPlayer()),
+	new Land("murcia_path", "murcia_label", 3, 8, randomPlayer()),
+	new Land("extremadura_path", "extremadura_label", 3, 8, randomPlayer()),
+	new Land("castilla_la_mancha_path", "castilla_la_mancha_label", 3, 8, randomPlayer()),
+	new Land("valencia_path", "valencia_label", 3, 8, randomPlayer()),
+	new Land("madrid_path", "madrid_label", 3, 8, randomPlayer()),
+	new Land("catalunya_path", "catalunya_label", 3, 8, randomPlayer()),
+	new Land("aragon_path", "aragon_label", 3, 8, randomPlayer()),
+	new Land("castilla_y_leon_path", "castilla_y_leon_label", 3, 8, randomPlayer()),
+	new Land("galicia_path", "galicia_label", 3, 8, randomPlayer()),
+	new Land("navarra_path", "navarra_label", 3, 8, randomPlayer()),
+	new Land("la_rioja_path", "la_rioja_label", 3, 8, randomPlayer()),
+	new Land("pais_vasco_path", "pais_vasco_label", 3, 8, randomPlayer()),
+	new Land("cantabria_path", "cantabria_label", 3, 8, randomPlayer()),
+	new Land("asturias_path", "asturias_label", 3, 8, randomPlayer()),
+	new Land("ceuta_path", "ceuta_label", 3, 8, randomPlayer()),
+	new Land("melilla_path", "melilla_label", 3, 8, randomPlayer())
 ];
 
 var edges = [
@@ -69,6 +68,17 @@ var edges = [
 	["galicia_path", "asturias_path"],
 ];
 
+function getNeighbours(land) {
+  var neighbours = [];
+  for(var i=0; i<edges.length; i++) {
+    if (land.id == edges[i][0])
+      neighbours.push(document.getElementById(edges[i][1]));
+    else if (land.id == edges[i][1])
+      neighbours.push(document.getElementById(edges[i][0]));
+  }
+  return neighbours;
+}
+
 function getPathForLabel(label_id) {
 	var land = null;
 	for (var i=0; i<lands.length; i++) {
@@ -87,6 +97,38 @@ function getLandForPathId(path_id) {
 	}
 }
 
-function attack(attacker, defender) {
+function diceRoll(dice) {
+	return Math.floor(Math.random()*dice*5) + dice;
+}
 
+function attack(attacker, defender) {
+	attackRoll = diceRoll(attacker.current_dice);
+	defendRoll = diceRoll(defender.current_dice);
+	if (attackRoll>defendRoll) {
+		msg = 'gana ' + attacker.path_id + '('+attackRoll+')'+' '+defender.path_id + '('+defendRoll+')';
+		defender.current_dice = attacker.current_dice-1;
+		defender.owner = attacker.owner;
+		attacker.current_dice = 1;
+		applyUnselectedStyle(defender);
+		applyUnselectedStyle(attacker);
+	} else if (attackRoll<defendRoll) {
+		msg = 'gana ' + defender.path_id + '('+defendRoll+')'+' '+attacker.path_id + '('+attackRoll+')';
+		attacker.current_dice = 1;
+		applySelectedStyle(attacker);
+	} else {
+		msg = 'empate!!! ' + attacker.path_id + '('+attackRoll+')'+' '+defender.path_id + '('+defendRoll+')';
+	}
+	console.log(msg);
+	messageBox = document.getElementById('message');
+	messageBox.textContent = msg;
+}
+
+function getLandsForOwner(player) {
+	var ownedLands = [];
+	for (var i=0; i<lands.length; i++) {
+		if (lands[i].owner.name == player.name) {
+			ownedLands.push(lands[i]);
+		}
+	}
+	return ownedLands;
 }
