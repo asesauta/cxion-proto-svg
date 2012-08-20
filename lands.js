@@ -63,8 +63,6 @@ function attackOutcome(attacker, attackRoll, defender, defendRoll) {
 		msg = 'empate!!! ' + attacker.path_id + '('+attackRoll+')'+' '+defender.path_id + '('+defendRoll+')';
 	}
 	console.log(msg);
-	messageBox = document.getElementById('message');
-	messageBox.textContent = msg;
 }
 
 function getLandsForOwner(player) {

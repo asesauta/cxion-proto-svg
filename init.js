@@ -124,6 +124,15 @@ for (var i=0; i<lands.length; i++) {
   }
 }
 
+function updateMessageBox() {
+	var messageBox = document.getElementById('message');
+	var msg = 'turno de '+turn.name;
+	if (turn==player) {
+		msg = 'tu turno!';
+	}
+	messageBox.textContent = msg;
+}
+
 var selected = null;
 var player = human;
 var turn = randomPlayer();
@@ -137,6 +146,8 @@ if (turn.name!=player.name) {
 endTurnButton.onclick = function() {
   endTurn();
 }
+
+updateMessageBox();
 
 reset();
 if (turn.isMachine()) {

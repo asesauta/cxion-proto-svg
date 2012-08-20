@@ -28,6 +28,9 @@ function endTurn() {
 	} else {
 		endTurnButton.disabled = false;
 	}
+
+	updateMessageBox();
+
 	reset();
 	if (turn.isMachine()) {
 		console.log('machine at work');

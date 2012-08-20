@@ -1,0 +1,29 @@
+#page {
+	width: 90%;
+	margin: auto;
+}
+#mapadiv {
+	width: 75%;
+}
+#svg-main {
+
+}
+#logo {
+	font-family: Arial, sans-serif;
+	font-size: 2em;
+	padding-right: 100px;
+}
+#message {
+	font-family: Arial, sans-serif;
+	padding-right: 25px;
+}
+.land {
+	stroke:grey;
+	stroke-width:0.2;
+}
+.landlabel {
+	stroke: #585858;
+	fill: #585858;
+	font-size:18px;
+	font-family:Arial
+}
