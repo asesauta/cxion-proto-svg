@@ -18,6 +18,10 @@ function endTurnMachine() {
 }
 
 function endTurn() {
+	if (isGameOver()) {
+		return;
+	}
+
 	next = nextPlayer(turn);
 	console.log('end turn '+turn.name+', next turn '+next.name);
 	assignNewDice(turn);
@@ -103,4 +107,15 @@ function nextAttack() {
 		}
 	}
 	return null;
+}
+
+function isGameOver() {
+	var winner = lands[0].owner;
+	for (var i=0; i<lands.length; i++) {
+		if (lands[i].owner!=winner) {
+			return false;
+		}
+	}
+	applyWinnerStyle(winner);
+	return true;
 }

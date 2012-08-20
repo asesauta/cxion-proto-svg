@@ -124,11 +124,13 @@ for (var i=0; i<lands.length; i++) {
   }
 }
 
-function updateMessageBox() {
+function updateMessageBox(msg) {
 	var messageBox = document.getElementById('message');
-	var msg = 'turno de '+turn.name;
-	if (turn==player) {
-		msg = 'tu turno!';
+	if (msg == null) {
+		var msg = 'turno de '+turn.name;
+		if (turn==player) {
+			msg = 'tu turno!';
+		}
 	}
 	messageBox.textContent = msg;
 }
