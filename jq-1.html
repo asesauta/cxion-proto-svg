@@ -211,6 +211,13 @@
       path.style.fill = land.owner.color.neighbourColor;
     }
 
+    function applyAttackStyle(contender, roll) {
+      path = document.getElementById(contender.path_id)
+      path.style.fill = 'grey';
+      var label = document.getElementById(contender.label_id);
+      label.textContent = roll;
+    }
+
   </script>
 
   </body>

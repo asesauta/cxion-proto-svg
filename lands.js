@@ -101,20 +101,32 @@ function diceRoll(dice) {
 	return Math.floor(Math.random()*dice*5) + dice;
 }
 
+var machineMovements = [];
 function attack(attacker, defender) {
-	attackRoll = diceRoll(attacker.current_dice);
-	defendRoll = diceRoll(defender.current_dice);
+	var attackRoll = diceRoll(attacker.current_dice);
+	var defendRoll = diceRoll(defender.current_dice);
+
+	if (turn.name=='human') {
+		attackOutcome(attacker, attackRoll, defender, defendRoll);
+		applyAttackStyle(attacker, attackRoll);
+		setTimeout(applyAttackStyle, 400, defender, defendRoll);
+		setTimeout(applyUnselectedStyle, 900, attacker);
+		setTimeout(applyUnselectedStyle, 1000, defender);
+	} else {
+		attackOutcome(attacker, attackRoll, defender, defendRoll);
+		machineMovements.push({'attacker': attacker, 'attackRoll': attackRoll, 'defender': defender, 'defendRoll': defendRoll});
+	}
+}
+
+function attackOutcome(attacker, attackRoll, defender, defendRoll) {
 	if (attackRoll>defendRoll) {
 		msg = 'gana ' + attacker.path_id + '('+attackRoll+')'+' '+defender.path_id + '('+defendRoll+')';
 		defender.current_dice = attacker.current_dice-1;
 		defender.owner = attacker.owner;
 		attacker.current_dice = 1;
-		applyUnselectedStyle(defender);
-		applyUnselectedStyle(attacker);
 	} else if (attackRoll<defendRoll) {
 		msg = 'gana ' + defender.path_id + '('+defendRoll+')'+' '+attacker.path_id + '('+attackRoll+')';
 		attacker.current_dice = 1;
-		applySelectedStyle(attacker);
 	} else {
 		msg = 'empate!!! ' + attacker.path_id + '('+attackRoll+')'+' '+defender.path_id + '('+defendRoll+')';
 	}

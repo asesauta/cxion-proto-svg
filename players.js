@@ -28,6 +28,25 @@ function randomPlayer() {
 	return players[Math.floor(Math.random()*players.length)];
 }
 
+function endTurnMachine() {
+	var t = 0;
+	for (var i=0; i<machineMovements.length; i++) {
+		console.log('*** machi mov '+machineMovements[i].attacker.path_id+' '+machineMovements[i].attackRoll+' '+machineMovements[i].defender.path_id+' '+machineMovements[i].defendRoll);
+		t += 400;
+		setTimeout(applyAttackStyle, t, machineMovements[i].attacker, machineMovements[i].attackRoll);
+		t += 400;
+		setTimeout(applyAttackStyle, t, machineMovements[i].defender, machineMovements[i].defendRoll);
+		t += 100;
+		setTimeout(applyUnselectedStyle, t, machineMovements[i].attacker);
+		t += 100;
+		setTimeout(applyUnselectedStyle, t, machineMovements[i].defender);
+	}
+	t += 100;
+	setTimeout(	function() {machineMovements = [];}, t);
+	t += 100;
+	setTimeout(endTurn, t);
+}
+
 function endTurn() {
 	next = nextPlayer(turn);
 	console.log('end turn '+turn.name+', next turn '+next.name);
@@ -41,7 +60,6 @@ function endTurn() {
 	}
 	reset();
 	if ((/^machine/).test(turn.name)) {
-	//if (turn.name=='machine') {
 		console.log('machine at work');
 		machineTurn();
 	}
@@ -94,12 +112,11 @@ function machineTurn() {
 		attack(move.from, move.to);
 		move = nextAttack()
 	}
-	endTurn();
+	endTurnMachine();
 }
 
 function nextAttack() {
 	var ownedLands = getLandsForOwner(turn);
-	console.log('next attack '+ownedLands.length);
 	for (var i=0; i<ownedLands.length; i++) {
 		if (ownedLands[i].current_dice>1) {
 			var neighbours = getNeighbours(document.getElementById(ownedLands[i].path_id));
