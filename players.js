@@ -1,33 +1,3 @@
-function Color(enabledColor, disabledColor, neighbourColor) {
-	this.enabledColor = enabledColor;
-	this.disabledColor = disabledColor;
-	this.neighbourColor = neighbourColor;
-}
-
-function Player(name, color) {
-	this.name = name;
-	this.color = color;
-}
-
-var red = new Color('#FF0000', '#F78181', '#FA5858');
-var blue = new Color('#045FB4', '#81BEF7', '#2E9AFE');
-var green = new Color('#04B431', '#81F79F', '#00FF40');
-
-human = new Player('human', red)
-machine1 = new Player('machine_1', blue)
-machine2 = new Player('machine_2', green)
-var players = [
-	human,
-	machine1,
-	machine2
-];
-
-var turn = human;
-
-function randomPlayer() {
-	return players[Math.floor(Math.random()*players.length)];
-}
-
 function endTurnMachine() {
 	var t = 0;
 	for (var i=0; i<machineMovements.length; i++) {
@@ -59,7 +29,7 @@ function endTurn() {
 		endTurnButton.disabled = false;
 	}
 	reset();
-	if ((/^machine/).test(turn.name)) {
+	if (turn.isMachine()) {
 		console.log('machine at work');
 		machineTurn();
 	}
