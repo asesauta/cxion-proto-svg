@@ -21,6 +21,11 @@ function endTurn() {
 	if (isGameOver()) {
 		return;
 	}
+	for (var i=0; i<players.length; i++) {
+		if (!players[i].isAlive()) {
+			players.splice(i, 1);
+		}
+	}
 
 	next = nextPlayer(turn);
 	console.log('end turn '+turn.name+', next turn '+next.name);

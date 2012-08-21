@@ -14,6 +14,13 @@ Player.prototype.isMachine = function() {
 	return ((/^machine/).test(turn.name));
 };
 
+Player.prototype.isAlive = function() {
+	for (var i=0; i<lands.length; i++) {
+		if (lands[i].owner == this)
+			return this;
+	}
+};
+
 var red = new Color('#FF0000', '#F78181', '#FA5858');
 var blue = new Color('#045FB4', '#81BEF7', '#2E9AFE');
 var green = new Color('#04B431', '#81F79F', '#00FF40');
