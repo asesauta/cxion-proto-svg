@@ -1,7 +1,7 @@
 function endTurnMachine() {
 	var t = 0;
 	for (var i=0; i<machineMovements.length; i++) {
-		console.log('*** machi mov '+machineMovements[i].attacker.path_id+' '+machineMovements[i].attackRoll+' '+machineMovements[i].defender.path_id+' '+machineMovements[i].defendRoll);
+		//console.log('*** machi mov '+machineMovements[i].attacker.path_id+' '+machineMovements[i].attackRoll+' '+machineMovements[i].defender.path_id+' '+machineMovements[i].defendRoll);
 		t += 400;
 		setTimeout(applyAttackStyle, t, machineMovements[i].attacker, machineMovements[i].attackRoll);
 		t += 400;

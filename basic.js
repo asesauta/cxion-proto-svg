@@ -93,4 +93,6 @@ function applyWinnerStyle(winner) {
     msg += 'has perdido, te ha ganado un primitivo programa de ordenador :( recarga para cobrarte la venganza';
   }
   updateMessageBox(msg);
+  newGameButton.style.visibility = 'visible';
+  endTurnButton.style.visibility = 'hidden';
 }

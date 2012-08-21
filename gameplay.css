@@ -15,7 +15,12 @@
 }
 #message {
 	font-family: Arial, sans-serif;
-	padding-right: 25px;
+}
+#end-turn {
+	margin-right: 20px;	
+}
+#new-game {
+	margin-left: 20px;	
 }
 .land {
 	stroke:grey;
