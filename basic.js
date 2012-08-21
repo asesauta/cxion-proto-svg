@@ -90,7 +90,7 @@ function applyWinnerStyle(winner) {
   if (winner == player) {
     msg += '¡¡¡enhorabuena, has ganado!!! :)';
   } else {
-    msg += 'has perdido, te ha ganado un primitivo programa de ordenador :( recarga para cobrarte la venganza';
+    msg += 'has perdido, te ha ganado un primitivo programa de ordenador :( cóbrate la venganza!';
   }
   updateMessageBox(msg);
   newGameButton.style.visibility = 'visible';
