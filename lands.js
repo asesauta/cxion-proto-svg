@@ -39,9 +39,13 @@ function attack(attacker, defender) {
 	if (turn.name=='human') {
 		attackOutcome(attacker, attackRoll, defender, defendRoll);
 		applyAttackStyle(attacker, attackRoll);
-		setTimeout(applyAttackStyle, 400, defender, defendRoll);
-		setTimeout(applyUnselectedStyle, 900, attacker);
-		setTimeout(applyUnselectedStyle, 1000, defender);
+		setTimeout(applyAttackStyle, 300, defender, defendRoll);
+		setTimeout(applyUnselectedStyle, 600, attacker);
+		setTimeout(applyUnselectedStyle, 900, defender);
+		if (isGameOver()) {
+			setTimeout(applyWinnerStyle, 900, human);
+			return;
+		}	
 	} else {
 		attackOutcome(attacker, attackRoll, defender, defendRoll);
 		machineMovements.push({'attacker': attacker, 'attackRoll': attackRoll, 'defender': defender, 'defendRoll': defendRoll});

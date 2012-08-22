@@ -86,11 +86,11 @@ function applyWinnerStyle(winner) {
     var path = document.getElementById(lands[i].path_id);
     path.style.fill = winner.color.enabledColor;
   }
-  var msg = 'fin de la partida ';
+  var msg = '';
   if (winner == player) {
     msg += '¡¡¡enhorabuena, has ganado!!! :)';
   } else {
-    msg += 'has perdido, te ha ganado un primitivo programa de ordenador :( cóbrate la venganza!';
+    msg += 'has perdido :( te ha ganado un primitivo programa de ordenador, cóbrate la venganza!';
   }
   updateMessageBox(msg);
   newGameButton.style.visibility = 'visible';

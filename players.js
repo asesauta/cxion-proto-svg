@@ -19,6 +19,7 @@ function endTurnMachine() {
 
 function endTurn() {
 	if (isGameOver()) {
+		applyWinnerStyle(winner);
 		return;
 	}
 	for (var i=0; i<players.length; i++) {
@@ -121,6 +122,5 @@ function isGameOver() {
 			return false;
 		}
 	}
-	applyWinnerStyle(winner);
 	return true;
 }
