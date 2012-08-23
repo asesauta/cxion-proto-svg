@@ -4,15 +4,64 @@
     <meta charset="utf-8">
     <title>c x i o n</title>
     <link rel="stylesheet" href="gameplay.css" />
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   </head>
 
   <body>
   <div id="page">
-    <div id="header">
-      <span id="logo">cxion</span><button id="end-turn">fin de turno</button><span id="message">turn</span><button id="new-game">nueva partida</button>
+    <div class="page-header">
+      <h1>cxion <small>solo puede quedar uno</small></h1>
     </div>
-    <hr/>
+    <div class="row">
+      <div class="hud span4">
+        <div class="row">
+          <div class="foto span1">
+            <img id="avatar0" src="robots/milton_web.jpg" class="player-avatar img-polaroid" max-width="50px" />
+          </div>
+          <div class="mensaje span3">
+            <span id="playerName0" class="player-name" ></span><br/>
+            <span id="turnLabel0" class="label label-info">turno</span><span class="player-message" id="playerMessage0"></span>
+          </div>
+        </div>
+      </div>
+      <div class="hud span4">
+        <div class="row">
+          <div class="foto span1">
+            <img id="avatar1" src="robots/mildred_web.jpg" class="player-avatar img-polaroid" max-width="50px" />
+          </div>
+          <div class="mensaje span3">
+            <span id="playerName1" class="player-name" ></span><br/>
+            <span id="turnLabel1" class="label label-info">turno</span><span class="player-message" id="playerMessage1"></span>
+          </div>
+        </div>
+      </div>
+      <div class="hud span4">
+        <div class="row">
+          <div class="foto span1">
+            <img id="avatar2" src="robots/monkey.jpg" class="player-avatar img-polaroid" max-width="50px" />
+          </div>
+          <div class="mensaje span3">
+            <span id="playerName2" class="player-name" ></span><br/>
+            <span id="turnLabel2" class="label label-info">turno</span><span class="player-message" id="playerMessage2"></span>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="row">
+      <hr class="span12" />
+    </div>
+    <div class="row">
+      <p class="lead">
+        <span class="span9 offset3">
+          <button id="end-turn" class="btn btn-success">fin de turno</button>
+          <span id="message">turn</span>
+          <button id="new-game" class="btn btn-primary">nueva partida</button>
+        </span>
+      </p>
+      <hr class="span12" />
+    </div>
+  </div>
+
     <div id="mapadiv">
       <svg id="svg-main" width="925" height="675" >
 

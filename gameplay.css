@@ -8,11 +8,6 @@
 #svg-main {
 
 }
-#logo {
-	font-family: Arial, sans-serif;
-	font-size: 2em;
-	padding-right: 100px;
-}
 #message {
 	font-family: Arial, sans-serif;
 }
@@ -31,4 +26,23 @@
 	fill: #585858;
 	font-size:18px;
 	font-family:Arial
+}
+.hud {
+	/*float: left;*/
+}
+.player-avatar {
+	max-width: 45px;
+	/*float: left;*/
+}
+.player-message {
+	font-family: monospace;
+	font-size: 20px;
+}
+.player-name {
+	font-family: monospace;
+	font-size: 20px;
+	font-weight: bold;
+}
+.mensaje {
+
 }

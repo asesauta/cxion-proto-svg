@@ -2,13 +2,13 @@ function endTurnMachine() {
 	var t = 0;
 	for (var i=0; i<machineMovements.length; i++) {
 		//console.log('*** machi mov '+machineMovements[i].attacker.path_id+' '+machineMovements[i].attackRoll+' '+machineMovements[i].defender.path_id+' '+machineMovements[i].defendRoll);
-		t += 400;
+		t += 200;
 		setTimeout(applyAttackStyle, t, machineMovements[i].attacker, machineMovements[i].attackRoll);
-		t += 400;
+		t += 200;
 		setTimeout(applyAttackStyle, t, machineMovements[i].defender, machineMovements[i].defendRoll);
-		t += 100;
+		t += 200;
 		setTimeout(applyUnselectedStyle, t, machineMovements[i].attacker);
-		t += 100;
+		t += 200;
 		setTimeout(applyUnselectedStyle, t, machineMovements[i].defender);
 	}
 	t += 100;
@@ -18,7 +18,8 @@ function endTurnMachine() {
 }
 
 function endTurn() {
-	if (isGameOver()) {
+	var winner = isGameOver();
+	if (winner) {
 		applyWinnerStyle(winner);
 		return;
 	}
@@ -39,6 +40,7 @@ function endTurn() {
 		endTurnButton.disabled = false;
 	}
 
+	updateHud();
 	updateMessageBox();
 
 	reset();
@@ -115,6 +117,16 @@ function nextAttack() {
 	return null;
 }
 
+function updateHud() {
+	for (var i=0; i<players.length; i++) {
+		if (players[i]==turn) {
+			document.getElementById('turnLabel'+i).style.visibility = 'visible';
+		} else {
+			document.getElementById('turnLabel'+i).style.visibility = 'hidden';
+		}
+	}
+}
+
 function isGameOver() {
 	var winner = lands[0].owner;
 	for (var i=0; i<lands.length; i++) {
@@ -122,5 +134,5 @@ function isGameOver() {
 			return false;
 		}
 	}
-	return true;
+	return winner;
 }

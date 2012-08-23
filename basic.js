@@ -84,15 +84,28 @@ function applyAttackStyle(contender, roll) {
 function applyWinnerStyle(winner) {
   for (var i=0; i<lands.length; i++) {
     var path = document.getElementById(lands[i].path_id);
-    path.style.fill = winner.color.enabledColor;
+    path.style.fill = winner.color.neighbourColor;
   }
   var msg = '';
   if (winner == player) {
     msg += '¡¡¡enhorabuena, has ganado!!! :)';
   } else {
-    msg += 'has perdido :( te ha ganado un primitivo programa de ordenador, cóbrate la venganza!';
+    msg += 'has perdido :( cóbrate la venganza!';
   }
   updateMessageBox(msg);
   newGameButton.style.visibility = 'visible';
   endTurnButton.style.visibility = 'hidden';
+}
+
+// shuffle algorithm, credit: http://sedition.com/perl/javascript-fy.html
+function fisherYates(myArray) {
+  var i = myArray.length;
+  if ( i == 0 ) return false;
+  while ( --i ) {
+     var j = Math.floor( Math.random() * ( i + 1 ) );
+     var tempi = myArray[i];
+     var tempj = myArray[j];
+     myArray[i] = tempj;
+     myArray[j] = tempi;
+   }
 }

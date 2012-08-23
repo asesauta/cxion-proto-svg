@@ -4,10 +4,12 @@ function Color(enabledColor, disabledColor, neighbourColor) {
 	this.neighbourColor = neighbourColor;
 }
 
-function Player(name, color) {
+function Player(name, displayName, color, avatar) {
 	this.name = name;
 	this.color = color;
+	this.displayName = displayName;
 	this.numLands = 0;
+	this.avatar = avatar;
 }
 
 Player.prototype.isMachine = function() {
@@ -25,9 +27,9 @@ var red = new Color('#FF0000', '#F78181', '#FA5858');
 var blue = new Color('#045FB4', '#81BEF7', '#2E9AFE');
 var green = new Color('#04B431', '#81F79F', '#00FF40');
 
-var human = new Player('human', red)
-var machine1 = new Player('machine_1', blue)
-var machine2 = new Player('machine_2', green)
+var human = new Player('human', 'tú', red, 'robots/monkey.jpg');
+var machine1 = new Player('machine_1', 'R3', blue, 'robots/milton_web.jpg');
+var machine2 = new Player('machine_2', 'gonzo', green, 'robots/gonzo_web.jpg');
 
 function randomPlayer() {
 	return players[Math.floor(Math.random()*players.length)];
@@ -84,7 +86,7 @@ var edges = [
 function updateMessageBox(msg) {
 	var messageBox = document.getElementById('message');
 	if (msg == null) {
-		var msg = 'turno de '+turn.name;
+		var msg = 'turno de '+turn.displayName;
 		if (turn==player) {
 			msg = 'tu turno!';
 		}
@@ -99,23 +101,29 @@ function init() {
 		machine1,
 		machine2
 	];
+	fisherYates(players);
+	for (var i=0; i<players.length; i++) {
+		document.getElementById('avatar'+i).src = players[i].avatar;
+		document.getElementById('playerName'+i).innerHTML = players[i].displayName;
+	}
+
 
 	lands = [
-		new Land("andalucia_path", "andalucia_label", 3, 11, randomPlayer()),
-		new Land("canarias_path", "canarias_label", 3, 9, randomPlayer()),
+		new Land("andalucia_path", "andalucia_label", 3, 8, randomPlayer()),
+		new Land("canarias_path", "canarias_label", 3, 8, randomPlayer()),
 		new Land("baleares_path", "baleares_label", 3, 8, randomPlayer()),
 		new Land("murcia_path", "murcia_label", 3, 8, randomPlayer()),
 		new Land("extremadura_path", "extremadura_label", 3, 8, randomPlayer()),
-		new Land("castilla_la_mancha_path", "castilla_la_mancha_label", 3, 9, randomPlayer()),
-		new Land("valencia_path", "valencia_label", 3, 11, randomPlayer()),
-		new Land("madrid_path", "madrid_label", 3, 12, randomPlayer()),
-		new Land("catalunya_path", "catalunya_label", 3, 12, randomPlayer()),
-		new Land("aragon_path", "aragon_label", 3, 9, randomPlayer()),
-		new Land("castilla_y_leon_path", "castilla_y_leon_label", 3, 10, randomPlayer()),
-		new Land("galicia_path", "galicia_label", 3, 10, randomPlayer()),
+		new Land("castilla_la_mancha_path", "castilla_la_mancha_label", 3, 8, randomPlayer()),
+		new Land("valencia_path", "valencia_label", 3, 8, randomPlayer()),
+		new Land("madrid_path", "madrid_label", 3, 8, randomPlayer()),
+		new Land("catalunya_path", "catalunya_label", 3, 8, randomPlayer()),
+		new Land("aragon_path", "aragon_label", 3, 8, randomPlayer()),
+		new Land("castilla_y_leon_path", "castilla_y_leon_label", 3, 8, randomPlayer()),
+		new Land("galicia_path", "galicia_label", 3, 8, randomPlayer()),
 		new Land("navarra_path", "navarra_label", 3, 8, randomPlayer()),
 		new Land("la_rioja_path", "la_rioja_label", 3, 8, randomPlayer()),
-		new Land("pais_vasco_path", "pais_vasco_label", 3, 10, randomPlayer()),
+		new Land("pais_vasco_path", "pais_vasco_label", 3, 8, randomPlayer()),
 		new Land("cantabria_path", "cantabria_label", 3, 8, randomPlayer()),
 		new Land("asturias_path", "asturias_label", 3, 8, randomPlayer()),
 		new Land("ceuta_path", "ceuta_label", 3, 8, randomPlayer()),
@@ -124,7 +132,7 @@ function init() {
 
 	selected = null;
 	player = human;
-	turn = randomPlayer();
+	turn = players[0];
 
 	newGameButton = document.getElementById('new-game');
 	newGameButton.style.visibility = 'hidden';
@@ -143,6 +151,7 @@ function init() {
 	}
 
 	updateMessageBox();
+	updateHud();
 
 	for (var i=0; i<lands.length; i++) {
 		land = document.getElementById(lands[i].path_id);
