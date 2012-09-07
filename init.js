@@ -105,6 +105,7 @@ function init() {
 	for (var i=0; i<players.length; i++) {
 		document.getElementById('avatar'+i).src = players[i].avatar;
 		document.getElementById('playerName'+i).innerHTML = players[i].displayName;
+		document.getElementById('hud'+i).style.borderColor = players[i].color.disabledColor;
 	}
 
 

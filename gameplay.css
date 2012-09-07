@@ -28,11 +28,15 @@
 	font-family:Arial
 }
 .hud {
-	/*float: left;*/
+	border: outset;
+	padding: 0.5em;
+}
+.foto {
+	/*border: dashed;
+	border-color: yellow;*/
 }
 .player-avatar {
-	max-width: 45px;
-	/*float: left;*/
+	max-width: 85%;
 }
 .player-message {
 	font-family: monospace;
