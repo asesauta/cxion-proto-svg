@@ -28,8 +28,8 @@ var blue = new Color('#045FB4', '#81BEF7', '#2E9AFE');
 var green = new Color('#04B431', '#81F79F', '#00FF40');
 
 var human = new Player('human', 'tú', red, 'robots/monkey.jpg');
-var machine1 = new Player('machine_1', 'R3', blue, 'robots/milton_web.jpg');
-var machine2 = new Player('machine_2', 'gonzo', green, 'robots/gonzo_web.jpg');
+var machine1 = new Player('machine_1', 'skippy', blue, 'robots/skippy_web.jpg');
+var machine2 = new Player('machine_2', 'mildred', green, 'robots/mildred_web.jpg');
 
 function randomPlayer() {
 	return players[Math.floor(Math.random()*players.length)];
